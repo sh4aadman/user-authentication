@@ -1,6 +1,6 @@
+import auth from "../Firebase/firebase.config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import auth from "../Firebase/firebase.config";
 import { useState } from "react";
 import { FaEye, FaEyeSlash, FaQuestionCircle } from 'react-icons/fa';
 
@@ -17,16 +17,13 @@ const Register = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
 
-        e.target.email.value = '';
-        e.target.password.value = '';
-
         setUserSuccessMessage('')
         setUserErrorMessage('')
 
         if (password.length < 6) {
             setUserErrorMessage('Password must be at least six(6) characters!')
             return;
-        } else if(!/[A-Z][a-z]/.test(password)){
+        } else if (!/[A-Z][a-z]/.test(password)) {
             setUserErrorMessage('Password must have contain at least one upper case and one lower case letter!')
             return;
         }
@@ -35,6 +32,10 @@ const Register = () => {
             .then(userCredential => {
                 console.log(userCredential.user)
                 setUserSuccessMessage('Account registered successfully!')
+
+                e.target.email.value = '';
+                e.target.password.value = '';
+
             })
             .catch(error => {
                 console.error(error.message)
@@ -52,7 +53,7 @@ const Register = () => {
                 <form onSubmit={handleFormSubmit} className="bg-slate-300 p-5 rounded-lg">
                     <label htmlFor="email">Email: <div className="input-group">
                         <input className="p-2 rounded-lg" type="email" name="email" id="email" placeholder={showExampleEmail ? "ex@mple.com" : "Email"} required />
-                        <button className="btn btn-square" onClick={() => {setShowExampleEmail(!showExampleEmail)}}><FaQuestionCircle></FaQuestionCircle></button>
+                        <button className="btn btn-square" onClick={() => { setShowExampleEmail(!showExampleEmail) }}><FaQuestionCircle></FaQuestionCircle></button>
                     </div>
                     </label>
                     <br />
