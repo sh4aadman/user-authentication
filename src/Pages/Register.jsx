@@ -12,6 +12,8 @@ const Register = () => {
     const [showExampleEmail, setShowExampleEmail] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
+    const [checked, setChecked] = useState(false)
+
     const handleFormSubmit = e => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -63,7 +65,11 @@ const Register = () => {
                     </div>
                     </label>
                     <br />
-                    <input className="btn" type="submit" value="Register" />
+                    <label htmlFor="terms"><div className="flex gap-2 items-center">
+                        <input onClick={() => {setChecked(!checked)}} type="checkbox" name="terms" id="terms" /><p className="text-sm">Terms and Conditions</p>
+                    </div></label>
+                    <br />
+                    <input className="btn" type="submit" value="Register" disabled={!checked}/>
                 </form>
                 {
                     userSuccessMessage && <div>
@@ -72,6 +78,9 @@ const Register = () => {
                 }
                 {
                     userErrorMessage && <h2 className="text-red-700 text-2xl">{userErrorMessage}</h2>
+                }
+                {
+                    !checked && <h2 className="text-red-700 text-2xl">Please accept our terms and conditions to Register!</h2>
                 }
             </div>
 
